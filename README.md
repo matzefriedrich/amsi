@@ -19,36 +19,26 @@ using (AmsiContext context = AmsiContext.Create(appName))
 }
 ```
 
-Scanning a buffer-full of content for malware is as easy as scanning a string; just use the overload that accepts a byte array.
+Scanning a buffer-full of content for malware is as easy as scanning a `string`; just use the overload that accepts a `byte` array.
 
 ```csharp
 MemoryStream stream = ...
-const string appName = "myapp";
-using (AmsiContext context = AmsiContext.Create(appName))
-{
-    byte[] buffer = stream.ToArray();
-    AmsiScanResult result = context.Scan(buffer, "");
-    if (result == AmsiScanResult.Clean)
-    {
-        // seems to be okay
-    }
-}
+byte[] buffer = stream.ToArray();
+AmsiScanResult result = context.Scan(buffer, "");
 ```
 
-Performing correlated scan requests are also possible. In the following example the ScanFile method is used to scan file contents for malware.
+Performing correlated scan requests are also possible. In the following example the `ScanFile` method is used to scan file contents for malware.
 
 ```csharp
-const string appName = "myapp";
-using (AmsiContext context = AmsiContext.Create(appName))
 using (AmsiSession scanSession = AmsiSession.Create(context))
 {
     string[] files = Directory.GetFiles(...);
     foreach (string file in files)
     {
-        AmsiScanResult result = scanSession.ScanFile(file)
-        if (result == AmsiScanResult.Clean)
+        AmsiScanResult fileResult = scanSession.ScanFile(file)
+        if (fileResult == AmsiScanResult.Block)
         {
-            // seems to be okay
+            // this file should be blocked...
         }
     }
 }
