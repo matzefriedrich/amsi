@@ -15,7 +15,10 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
     
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
@@ -26,8 +29,8 @@ jobs:
       run: dotnet restore
     
     - name: Build
-      run: dotnet build --no-restore --framework net8.0-windows --configuration Release
+      run: dotnet build --configuration Release
     
     - name: Run unit tests
       run: |
-        dotnet test --no-build --framework net8.0-windows --configuration Release --verbosity normal
+        dotnet test --framework net8.0-windows --configuration Release --verbosity normal
