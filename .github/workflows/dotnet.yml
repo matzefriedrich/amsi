@@ -12,7 +12,7 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
     - uses: actions/checkout@v4
@@ -26,7 +26,8 @@ jobs:
       run: dotnet restore
     
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build --no-restore --framework net8.0-windows --configuration Release
     
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
+    - name: Run unit tests
+      run: |
+        dotnet test --no-build --framework net8.0-windows --configuration Release --verbosity normal
