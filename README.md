@@ -8,10 +8,10 @@ Scan a string for malware in C#.
 
 ```csharp
 const string appName = "myapp";
-using (AmsiContext sut = AmsiContext.Create(appName))
+using (AmsiContext context = AmsiContext.Create(appName))
 {
     const string input = "Pure air";
-    AmsiScanResult result = sut.Scan(input, "");
+    AmsiScanResult result = context.Scan(input, "");
     if (result == AmsiScanResult.Clean)
     {
         // seems to be okay
@@ -24,13 +24,32 @@ Scanning a buffer-full of content for malware is as easy as scanning a string; j
 ```csharp
 MemoryStream stream = ...
 const string appName = "myapp";
-using (AmsiContext sut = AmsiContext.Create(appName))
+using (AmsiContext context = AmsiContext.Create(appName))
 {
     byte[] buffer = stream.ToArray();
-    AmsiScanResult result = sut.Scan(buffer, "");
+    AmsiScanResult result = context.Scan(buffer, "");
     if (result == AmsiScanResult.Clean)
     {
         // seems to be okay
+    }
+}
+```
+
+Performing correlated scan requests are also possible. In the following example the ScanFile method is used to scan file contents for malware.
+
+```csharp
+const string appName = "myapp";
+using (AmsiContext context = AmsiContext.Create(appName))
+using (AmsiSession scanSession = AmsiSession.Create(context))
+{
+    string[] files = Directory.GetFiles(...);
+    foreach (string file in files)
+    {
+        AmsiScanResult result = scanSession.ScanFile(file)
+        if (result == AmsiScanResult.Clean)
+        {
+            // seems to be okay
+        }
     }
 }
 ```
