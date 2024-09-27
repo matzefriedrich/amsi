@@ -1,6 +1,6 @@
 # Antimalware Scan Interface for .NET
 
-This is a .NET Standard library project providing functionality to integrate the Microsoft Windows Antimalware Scan Interface (AMSI) into any .NET application. Please find the AMSI documentation at: https://msdn.microsoft.com/en-us/library/windows/desktop/dn889587(v=vs.85).aspx
+This is a .NET 8.0 library project providing functionality to integrate the [Microsoft Windows Antimalware Scan Interface (AMSI)](https://learn.microsoft.com/en-us/windows/win32/amsi/antimalware-scan-interface-portal?redirectedfrom=MSDN) into any .NET application.
 
 ## Usage
 
@@ -19,7 +19,7 @@ using (AmsiContext context = AmsiContext.Create(appName))
 }
 ```
 
-Scanning a buffer-full of content for malware is as easy as scanning a `string`; just use the overload that accepts a `byte` array.
+Scanning a buffer full of content for malware is as easy as scanning a `string`; use the overload that accepts a `byte` array.
 
 ```csharp
 MemoryStream stream = ...
@@ -27,7 +27,7 @@ byte[] buffer = stream.ToArray();
 AmsiScanResult result = context.Scan(buffer, "");
 ```
 
-Performing correlated scan requests are also possible. In the following example the `ScanFile` method is used to scan file contents for malware.
+It is also possible to perform correlated scan requests. In the following example, the `ScanFile` method is used to scan file contents for malware.
 
 ```csharp
 using (AmsiSession scanSession = AmsiSession.Create(context))
