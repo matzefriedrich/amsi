@@ -1,6 +1,26 @@
+![CI](https://github.com/matzefriedrich/amsi/actions/workflows/dotnet.yml/badge.svg)
+![GitHub Tag](https://img.shields.io/github/v/tag/matzefriedrich/amsi)
+![GitHub License](https://img.shields.io/github/license/matzefriedrich/amsi)
+
+
 # Antimalware Scan Interface for .NET
 
 This is a .NET 8.0 library project providing functionality to integrate the [Microsoft Windows Antimalware Scan Interface (AMSI)](https://learn.microsoft.com/en-us/windows/win32/amsi/antimalware-scan-interface-portal?redirectedfrom=MSDN) into any .NET application.
+
+## Build
+
+```sh
+$ dotnet build --configuration Release
+```
+
+### Run tests
+
+> **The library uses the AMSI interface, which is only available on Windows desktop versions.** You will encounter several failing tests if you run the tests on a non-Desktop version of Windows.
+
+```sh
+$ dotnet test --framework net8.0-windows --configuration Release --verbosity normal
+```
+
 
 ## Usage
 
