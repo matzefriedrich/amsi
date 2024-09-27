@@ -30,7 +30,9 @@ jobs:
     
     - name: Build
       run: dotnet build --configuration Release
-    
-    - name: Run unit tests
-      run: |
-        dotnet test --framework net8.0-windows --configuration Release --verbosity normal
+
+    # We cannot run tests here, because AMSI requires a Desktop version of Windows
+
+    # - name: Run unit tests
+    #   run: |
+    #     dotnet test --framework net8.0-windows --configuration Release --verbosity normal
